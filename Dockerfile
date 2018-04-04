@@ -16,6 +16,7 @@ RUN set -ex && \
   cd xmrig && \
   git clone https://github.com/xmrig/xmrig build && \
   cd build && \
+  git checkout v2.6.0-beta1 && \
   sed -i 's/kDonateLevel = 5/kDonateLevel = 0/' src/donate.h && \
   sed -i 's/(arg < 1 || arg > 99)/(arg < 0 || arg > 99)/g' src/Options.cpp && \
   cmake -DCMAKE_BUILD_TYPE=Release . && \
