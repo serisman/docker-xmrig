@@ -16,7 +16,7 @@ RUN set -ex && \
   cd xmrig && \
   git clone https://github.com/xmrig/xmrig build && \
   cd build && \
-  git checkout v2.6.0-beta1 && \
+  git checkout v2.6.0-beta2 && \
   sed -i 's/kDefaultDonateLevel = 5/kDefaultDonateLevel = 0/' src/donate.h && \
   sed -i 's/kMinDonateLevel     = 5/kMinDonateLevel     = 0/' src/donate.h && \
   cmake -DCMAKE_BUILD_TYPE=Release . && \
