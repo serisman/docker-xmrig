@@ -12,6 +12,7 @@ RUN set -ex && \
     cmake \
     libuv-dev \
     libmicrohttpd-dev \
+    openssl-dev \
     build-base && \
   cd xmrig && \
   git clone https://github.com/xmrig/xmrig build && \
