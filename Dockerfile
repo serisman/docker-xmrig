@@ -5,6 +5,7 @@ RUN set -ex && \
   adduser -S -D -h /xmrig -G miner miner && \
   apk --no-cache upgrade && \
   apk --no-cache add \
+    openssl \
     libuv \
     libmicrohttpd && \
   apk --no-cache add --virtual .build-deps \
