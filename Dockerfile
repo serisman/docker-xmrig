@@ -20,7 +20,7 @@ RUN set -ex && \
   cd build && \
   git checkout v2.14.1 && \
   sed -i 's/kDefaultDonateLevel = 5/kDefaultDonateLevel = 0/' src/donate.h && \
-  sed -i 's/kMinDonateLevel     = 5/kMinDonateLevel     = 0/' src/donate.h && \
+  sed -i 's/kMinimumDonateLevel = 1/kMinimumDonateLevel = 0/' src/donate.h && \
   cmake -DCMAKE_BUILD_TYPE=Release . && \
   make && \
   cd .. && \
