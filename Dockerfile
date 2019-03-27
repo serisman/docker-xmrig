@@ -16,9 +16,9 @@ RUN set -ex && \
     openssl-dev \
     build-base && \
   cd xmrig && \
-  git clone https://github.com/xmrig/xmrig build && \
+  git clone https://github.com/MoneroOcean/xmrig build && \
   cd build && \
-  git checkout v2.14.1 && \
+  git checkout v2.14.1-mo1 && \
   sed -i 's/kDefaultDonateLevel = 5/kDefaultDonateLevel = 0/' src/donate.h && \
   sed -i 's/kMinimumDonateLevel = 1/kMinimumDonateLevel = 0/' src/donate.h && \
   cmake -DCMAKE_BUILD_TYPE=Release . && \
