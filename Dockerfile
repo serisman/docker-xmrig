@@ -1,9 +1,10 @@
-FROM alpine:3.8
+FROM alpine:edge
 
 RUN set -ex && \
   addgroup -S miner && \
   adduser -S -D -h /xmrig -G miner miner && \
   apk --no-cache upgrade && \
+  apk --no-cache add hwloc hwloc-dev --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
   apk --no-cache add \
     openssl \
     libuv \
@@ -18,7 +19,7 @@ RUN set -ex && \
   cd xmrig && \
   git clone https://github.com/MoneroOcean/xmrig build && \
   cd build && \
-  git checkout v2.14.1-mo1 && \
+  git checkout v4.2.1-beta-mo1 && \
   sed -i 's/kDefaultDonateLevel = 5/kDefaultDonateLevel = 0/' src/donate.h && \
   sed -i 's/kMinimumDonateLevel = 1/kMinimumDonateLevel = 0/' src/donate.h && \
   cmake -DCMAKE_BUILD_TYPE=Release . && \
@@ -26,7 +27,7 @@ RUN set -ex && \
   cd .. && \
   cp build/xmrig /usr/bin && \
   rm -rf build && \
-  apk del .build-deps || return 0
+  apk del .build-deps hwloc-dev || return 0
 
 USER miner
 WORKDIR /xmrig
