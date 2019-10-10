@@ -19,7 +19,7 @@ RUN set -ex && \
   cd xmrig && \
   git clone https://github.com/MoneroOcean/xmrig build && \
   cd build && \
-  git checkout v4.2.1-beta-mo1 && \
+  git checkout v4.3.0-beta-mo1 && \
   sed -i 's/kDefaultDonateLevel = 5/kDefaultDonateLevel = 0/' src/donate.h && \
   sed -i 's/kMinimumDonateLevel = 1/kMinimumDonateLevel = 0/' src/donate.h && \
   cmake -DCMAKE_BUILD_TYPE=Release . && \
