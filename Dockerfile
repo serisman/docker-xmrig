@@ -24,4 +24,4 @@ COPY --from=build /build/xmrig/xmrig /usr/bin
 
 USER miner
 WORKDIR /xmrig
-CMD ["/usr/bin/xmrig"]
+ENTRYPOINT ["/usr/bin/xmrig"]
