@@ -1,7 +1,6 @@
 FROM alpine:edge as build
 
-RUN apk --no-cache upgrade
-RUN apk --no-cache add git build-base cmake openssl-dev libuv-dev libmicrohttpd-dev
+RUN apk --no-cache add git build-base cmake openssl-dev libuv-dev
 RUN apk --no-cache add hwloc-dev --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/
 
 WORKDIR /build
@@ -19,11 +18,10 @@ FROM alpine:edge
 
 RUN addgroup -S miner && \
   adduser -S -D -h /xmrig -G miner miner && \
-  apk --no-cache upgrade && \
-  apk --no-cache add openssl libuv libmicrohttpd && \
+  apk --no-cache add libssl1.1 libuv && \
   apk --no-cache add hwloc --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/
 COPY --from=build /build/xmrig/xmrig /usr/bin
 
 USER miner
 WORKDIR /xmrig
-ENTRYPOINT ["/usr/bin/xmrig"]
+CMD ["/usr/bin/xmrig"]
