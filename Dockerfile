@@ -1,33 +1,27 @@
+FROM alpine:edge as build
+
+RUN apk --no-cache upgrade
+RUN apk --no-cache add git build-base cmake openssl-dev libuv-dev libmicrohttpd-dev
+RUN apk --no-cache add hwloc-dev --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/
+
+WORKDIR /build
+RUN git clone https://github.com/MoneroOcean/xmrig
+
+WORKDIR /build/xmrig
+RUN git checkout v4.3.1-beta-mo2
+RUN sed -i 's/kDefaultDonateLevel = 5/kDefaultDonateLevel = 0/' src/donate.h
+RUN sed -i 's/kMinimumDonateLevel = 1/kMinimumDonateLevel = 0/' src/donate.h
+RUN cmake -DCMAKE_BUILD_TYPE=Release . && make
+
+#---------------------------------------------------------------------
 FROM alpine:edge
 
-RUN set -ex && \
-  addgroup -S miner && \
+COPY --from=build /build/xmrig/xmrig /usr/bin
+RUN addgroup -S miner && \
   adduser -S -D -h /xmrig -G miner miner && \
   apk --no-cache upgrade && \
-  apk --no-cache add hwloc hwloc-dev --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ && \
-  apk --no-cache add \
-    openssl \
-    libuv \
-    libmicrohttpd && \
-  apk --no-cache add --virtual .build-deps \
-    git \
-    cmake \
-    libuv-dev \
-    libmicrohttpd-dev \
-    openssl-dev \
-    build-base && \
-  cd xmrig && \
-  git clone https://github.com/MoneroOcean/xmrig build && \
-  cd build && \
-  git checkout v4.3.1-beta-mo2 && \
-  sed -i 's/kDefaultDonateLevel = 5/kDefaultDonateLevel = 0/' src/donate.h && \
-  sed -i 's/kMinimumDonateLevel = 1/kMinimumDonateLevel = 0/' src/donate.h && \
-  cmake -DCMAKE_BUILD_TYPE=Release . && \
-  make && \
-  cd .. && \
-  cp build/xmrig /usr/bin && \
-  rm -rf build && \
-  apk del .build-deps hwloc-dev || return 0
+  apk --no-cache add openssl libuv libmicrohttpd && \
+  apk --no-cache add hwloc --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/
 
 USER miner
 WORKDIR /xmrig
