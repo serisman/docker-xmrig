@@ -1,7 +1,7 @@
 FROM alpine:edge as build
 
-RUN apk --no-cache add coreutils git build-base cmake openssl-dev libuv-dev
-RUN apk --no-cache add hwloc-dev --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+RUN apk --no-cache add coreutils git build-base cmake openssl-dev libuv-dev hwloc-dev
 
 WORKDIR /build
 RUN git clone https://github.com/MoneroOcean/xmrig
@@ -16,15 +16,12 @@ RUN make -j$(getconf _NPROCESSORS_ONLN)
 #---------------------------------------------------------------------
 FROM alpine:edge
 
-RUN apk --no-cache add libacl libattr
-COPY --from=build /bin/nice /bin
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+RUN apk --no-cache add coreutils libssl1.1 libuv hwloc
+RUN addgroup -S miner && adduser -S -D -h /xmrig -G miner miner
 
-RUN addgroup -S miner && \
-  adduser -S -D -h /xmrig -G miner miner && \
-  apk --no-cache add libssl1.1 libuv && \
-  apk --no-cache add hwloc --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/
 COPY --from=build /build/xmrig/xmrig /usr/bin
 
 USER miner
 WORKDIR /xmrig
-ENTRYPOINT ["/usr/bin/xmrig"]
+ENTRYPOINT ["/bin/nice", "-n19", "/usr/bin/xmrig"]
