@@ -7,7 +7,7 @@ WORKDIR /build
 RUN git clone https://github.com/MoneroOcean/xmrig
 
 WORKDIR /build/xmrig
-RUN git checkout v5.3.0-mo1
+RUN git checkout v5.4.0-mo1
 RUN sed -i 's/kDefaultDonateLevel = 5/kDefaultDonateLevel = 0/' src/donate.h
 RUN sed -i 's/kMinimumDonateLevel = 1/kMinimumDonateLevel = 0/' src/donate.h
 RUN cmake -DCMAKE_BUILD_TYPE=Release .
