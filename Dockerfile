@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.13
 
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
 RUN apk --no-cache add coreutils libssl1.1 libuv hwloc

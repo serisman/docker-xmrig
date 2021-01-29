@@ -1,10 +1,10 @@
-FROM alpine:edge as build
+FROM alpine:3.13 as build
 
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
 RUN apk --no-cache add coreutils git build-base cmake openssl-dev libuv-dev hwloc-dev
 
 WORKDIR /build
-RUN git clone -b v6.7.2-mo1 https://github.com/MoneroOcean/xmrig
+RUN git clone -b v6.8.0-mo1 https://github.com/MoneroOcean/xmrig
 
 WORKDIR /build/xmrig
 RUN sed -i 's/kDefaultDonateLevel = 5/kDefaultDonateLevel = 0/' src/donate.h
