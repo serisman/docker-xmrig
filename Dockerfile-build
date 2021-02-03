@@ -1,4 +1,4 @@
-FROM alpine:3.13 as build
+FROM alpine:edge as build
 
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
 RUN apk --no-cache add coreutils git build-base cmake openssl-dev libuv-dev hwloc-dev
