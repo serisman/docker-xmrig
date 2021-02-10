@@ -4,7 +4,7 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/reposit
 RUN apk --no-cache add coreutils git build-base cmake openssl-dev libuv-dev hwloc-dev
 
 WORKDIR /build
-RUN git clone -b v6.8.1-mo2 https://github.com/MoneroOcean/xmrig
+RUN git clone -b v6.8.2-mo1 https://github.com/MoneroOcean/xmrig
 
 WORKDIR /build/xmrig
 RUN sed -i 's/kDefaultDonateLevel = 5/kDefaultDonateLevel = 0/' src/donate.h
