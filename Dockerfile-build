@@ -4,7 +4,7 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/latest-stable/community' >> /etc/
 RUN apk --no-cache add coreutils git build-base cmake openssl-dev libuv-dev hwloc-dev
 
 WORKDIR /build
-RUN git clone -b v6.21.3-mo9 https://github.com/MoneroOcean/xmrig.git
+RUN git clone -b v6.22.0-mo2 https://github.com/MoneroOcean/xmrig.git
 
 WORKDIR /build/xmrig
 #RUN sed -i '1i#include <stdexcept>' src/backend/opencl/runners/OclRyoRunner.cpp
